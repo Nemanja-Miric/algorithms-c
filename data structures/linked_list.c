@@ -2,7 +2,14 @@
 
 #include "linked_list.h"
 
-void linked_list_singly_insert(linked_list_singly* linked_list, int data, int index)
+linked_list_singly linked_list_singly_init(void)
+{
+    linked_list_singly linked_list = { .reference = nullptr, .length = 0 };
+    
+    return linked_list;
+}
+
+void linked_list_singly_insert(linked_list_singly * restrict linked_list, const int data, int index)
 {
     if (linked_list->length < -index || linked_list->length <= index)
         return;
@@ -12,8 +19,8 @@ void linked_list_singly_insert(linked_list_singly* linked_list, int data, int in
     
     linked_list->length++;
     
-    node_singly* previous_node = linked_list->head;
-    node_singly* current_node;
+    node_singly *previous_node = linked_list->head;
+    node_singly *current_node;
     *node = { .data = data, .reference = nullptr};
     
     if (index == 0)
@@ -31,7 +38,7 @@ void linked_list_singly_insert(linked_list_singly* linked_list, int data, int in
     previous_node->reference = node;
 }
 
-void linked_list_singly_delete(linked_list_singly* linked_list, int index)
+void linked_list_singly_delete(linked_list_singly * restrict linked_list, int index)
 {
     if (linked_list->length < -index || linked_list->length <= index)
         return;
@@ -41,7 +48,7 @@ void linked_list_singly_delete(linked_list_singly* linked_list, int index)
     
     linked_list->length--;
     
-    node_singly* previous_node = linked_list->head;
+    node_singly *previous_node = linked_list->head;
     
     if (index == 0)
     {
@@ -56,7 +63,7 @@ void linked_list_singly_delete(linked_list_singly* linked_list, int index)
     previous_node->reference = previous_node->reference->reference;
 }
 
-int linked_list_singly_traverse(linked_list_singly* linked_list, int index)
+int linked_list_singly_traverse(const linked_list_singly * restrict linked_list, int index)
 {
     if (linked_list->length < -index || linked_list->length <= index)
         return;
@@ -64,7 +71,7 @@ int linked_list_singly_traverse(linked_list_singly* linked_list, int index)
     if (index < 0)
         index += linked_list->length;
     
-    node_singly* node = linked_list->head;
+    node_singly *node = linked_list->head;
     
     while (index--)
         node = node->reference;
