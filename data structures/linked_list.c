@@ -4,7 +4,7 @@
 
 linked_list_singly linked_list_singly_init(void)
 {
-    linked_list_singly linked_list = { .reference = nullptr, .length = 0 };
+    static linked_list_singly linked_list = { .reference = nullptr, .length = 0 };
     
     return linked_list;
 }
