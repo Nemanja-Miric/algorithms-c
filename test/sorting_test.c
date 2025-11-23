@@ -2,16 +2,16 @@
 
 #include "../algorithms/sorting.h"
 
-void counting_sort_tests(void);
+static void counting_sort_tests(void);
 
-bool array_is_sorted(const unsigned long long int * restrict array, const size_t length);
+static bool array_is_sorted(const unsigned long long int * restrict array, const size_t length);
 
 int main(void)
 {
     counting_sort_tests();
 }
 
-void counting_sort_tests(void)
+static void counting_sort_tests(void)
 {
     size_t test = 0;
     
@@ -53,7 +53,7 @@ void counting_sort_tests(void)
         fprintf(stderr, "Test %zd failed\n", test);
 }
 
-bool array_is_sorted(const unsigned long long int * restrict array, const size_t length)
+static bool array_is_sorted(const unsigned long long int * restrict array, const size_t length)
 {
     for (size_t i = 1; i < length; i++)
         if (array[i - 1] > array[i])
