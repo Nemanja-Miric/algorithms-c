@@ -2,17 +2,15 @@
 
 #include "linked_list.h"
 
-linked_list_singly linked_list_singly_init(void)
+void linked_list_singly_init(linked_list_singly * restrict linked_list)
 {
-    static linked_list_singly linked_list = { .reference = nullptr, .length = 0 };
-    
-    return linked_list;
+    *linked_list = (linked_list_singly){ .head = nullptr, .length = 0 };
 }
 
-void linked_list_singly_insert(linked_list_singly * restrict linked_list, const int data, int index)
+int linked_list_singly_insert(linked_list_singly * restrict linked_list, const int value, int index)
 {
-    if (linked_list->length < -index || linked_list->length <= index)
-        return;
+    if (linked_list->length < -index || linked_list->length < index)
+        return 1;
     
     if (index < 0)
         index += linked_list->length;
@@ -20,15 +18,15 @@ void linked_list_singly_insert(linked_list_singly * restrict linked_list, const 
     linked_list->length++;
     
     node_singly *previous_node = linked_list->head;
-    node_singly *current_node;
-    *node = { .data = data, .reference = nullptr};
+    node_singly *node = malloc(sizeof(node_singly));
+    *node = (node_singly){ .data = value, .reference = nullptr };
     
     if (index == 0)
     {
         node->reference = previous_node;
         linked_list->head = node;
         
-        return;
+        return 0;
     }
     else
         while (--index)
@@ -36,6 +34,8 @@ void linked_list_singly_insert(linked_list_singly * restrict linked_list, const 
     
     node->reference = previous_node->reference;
     previous_node->reference = node;
+    
+    return 0;
 }
 
 void linked_list_singly_delete(linked_list_singly * restrict linked_list, int index)
@@ -63,10 +63,10 @@ void linked_list_singly_delete(linked_list_singly * restrict linked_list, int in
     previous_node->reference = previous_node->reference->reference;
 }
 
-int linked_list_singly_traverse(const linked_list_singly * restrict linked_list, int index)
+int linked_list_singly_traverse(const linked_list_singly * restrict linked_list, int index, int * restrict value)
 {
     if (linked_list->length < -index || linked_list->length <= index)
-        return;
+        return 1;
     
     if (index < 0)
         index += linked_list->length;
@@ -76,5 +76,7 @@ int linked_list_singly_traverse(const linked_list_singly * restrict linked_list,
     while (index--)
         node = node->reference;
     
-    return node->data;
+    *value = node->data;
+    
+    return 0;
 }
