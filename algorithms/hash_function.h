@@ -1,9 +1,9 @@
 #ifndef ALGORITHMS_C_HASH_FUNCTION_H
 #define ALGORITHMS_C_HASH_FUNCTION_H
 
-int hash_by_division(int key, int length);
-int hash_by_multiplication(int key, int length, float constant); // If constant <= 0 then constant = golden ratio
-int hash_string(char* key, int length);
-int hash_string_polynomial(char* key, int length, int constant);
+int hash_by_division(const int key, const int length);
+int hash_by_multiplication(const int key, const int length, const float constant); // If constant <= 0 then constant = golden ratio
+int hash_string(const char * restrict key, const int length);
+int hash_string_polynomial(const char * restrict key, const int length, const int constant);
 
 #endif

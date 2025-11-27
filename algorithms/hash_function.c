@@ -1,18 +1,20 @@
 #include "hash_function.h"
 
+#include <math.h>
+
 #define GOLDEN_RATIO 1.618033f
 
-int hash_by_division(int key, int length)
+int hash_by_division(const int key, const int length)
 {
     return key % length;
 }
 
-int hash_by_multiplication(int key, int length, float constant)
+int hash_by_multiplication(const int key, const int length, const float constant)
 {
-    return (int)((float)(length)*((float)(key)*(constant <= 0 ? GOLDEN_RATIO : constant) % 1.0f));
+    return (int)((float)(length)*fmodf((float)(key)*(constant <= 0 ? GOLDEN_RATIO : constant), 1.0f));
 }
 
-int hash_string(char* key, int length)
+int hash_string(const char * restrict key, const int length)
 {
     unsigned int hash = 0u;
     
@@ -25,7 +27,7 @@ int hash_string(char* key, int length)
     return (int)(hash % length);
 }
 
-int hash_string_polynomial(char* key, int length, int constant)
+int hash_string_polynomial(const char * restrict key, const int length, const int constant)
 {
     int hash = 0;
     
